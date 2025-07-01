@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_PATH" value="logs" />
+    <timestamp key="current.date" datePattern="yyyy-MM-dd_HH-mm-ss" />
+
+    <!-- Use RollingFileAppender instead of FileAppender -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/product-log-latest.log</file> <!-- Active log file -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/product-log-%d{yyyy-MM-dd_HH-mm-ss}.log</fileNamePattern>
+            <maxHistory>4</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.example.loggerproduct" level="TRACE" additivity="false">
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <logger name="org.springframework" level="WARN" />
+
+    <root level="WARN">
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
